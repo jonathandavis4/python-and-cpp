@@ -1,22 +1,25 @@
-import ctypes
+from ctypes import CDLL, c_char_p
+
+
+so_file = 'C++/testlib.so'
 
 
 def hello_world():
-    lib = ctypes.CDLL('./lib.so')
+    lib = CDLL(so_file)
     lib.hello_world()
 
 def add(a, b):
-    lib = ctypes.CDLL('./lib.so')
+    lib = CDLL(so_file)
     return lib.add(a, b)
 
 def multiply_by_2(a):
-    lib = ctypes.CDLL('./lib.so')
+    lib = CDLL(so_file)
     double = lib.multiply_by_2(a)
     return double
 
 def get_string():
-    lib = ctypes.CDLL('./lib.so')
-    lib.get_string.restype = ctypes.c_char_p
+    lib = CDLL(so_file)
+    lib.get_string.restype = c_char_p
     s_bytes = lib.get_string()
     s_unicode = s_bytes.decode()
     return s_unicode
@@ -28,8 +31,8 @@ def get_obj_id():
             my_id = id(self)
             return f'MyClass {my_id}'.encode()
 
-    lib = ctypes.CDLL('./lib.so')
+    lib = CDLL(so_file)
     obj = MyClass()
-    lib.get_obj_id.restype = ctypes.c_char_p
+    lib.get_obj_id.restype = c_char_p
     obj_id_string = lib.get_obj_id(obj).decode()
     return obj_id_string

@@ -1,6 +1,4 @@
-import ctypes
-
-from testlib import *
+from testlib.testlib import *
 
 
 hello_world()
